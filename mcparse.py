@@ -21,7 +21,9 @@
 #  - Compatibility with Numpy array-type?
 #  - Calculation of total T value for any standard F tally
 #    even if it is not present in output.
-
+#  - "for line in self.lines" appears way too often...
+#    would like to make this process cleaner.
+ 
 # KNOWN ISSUES:
 #  - When calling TallyCells(), the list of cells will be cut short 
 #    if the tally entry is interrupted with a comment line or in-line (\$) comment.
@@ -37,6 +39,12 @@ class ReadData:
             # Removes the MCNP license up to the first comment.
             # Be wary, this may not work well with other decks.
             self.lines = self.lines[37:]
+            
+        # Remove any FC cards
+        for line in self.lines:
+            if line[0] == "+":
+                fc_card = self.lines.index(line)
+                del self.lines[fc_card]
             
         # Find start and end of Table 60
         # start...
@@ -142,7 +150,7 @@ class ReadData:
         # Find the start of tally cell/volume pairs
         for line in self.lines:
             if "1tally" in line and f" {tally_number} " in line:
-                prelim = self.lines.index(line) + 6
+                prelim = self.lines.index(line) + 5
                 tally_values = self.lines[prelim:]
                 break
         
@@ -384,6 +392,7 @@ class ReadData:
         if self.filepath:
             self.filepath.close()
             self.filepath = None
+
 
 
 
