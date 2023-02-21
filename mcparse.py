@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[26]:
+
+
 # ----------------------------------------
 # Created by Tanner Heatherly
 # Last updated February 20th, 2023
@@ -302,7 +308,7 @@ class ReadData:
     
     
     def Imp(self, cells):    
-        '''Grabs total mass from individual or list
+        '''Grabs cell importance from individual or list
            of cells from Table 60.'''
         
         assert type(cells) == list or type(cells) == int, AssertionError("Argument(s) must be type 'list' or 'int'")
@@ -327,7 +333,7 @@ class ReadData:
     
     
     def Matcard(self, cells):    
-        '''Grabs total mass from individual or list
+        '''Grabs material card from individual or list
            of cells from Table 60.'''
         
         assert type(cells) == list or type(cells) == int, AssertionError("Argument(s) must be type 'list' or 'int'")
@@ -384,6 +390,34 @@ class ReadData:
         if self.filepath:
             self.filepath.close()
             self.filepath = None
+
+
+# In[48]:
+
+
+output = r"C:\Users\tanhe\Desktop\NSE 474\outp.i"
+output2 = r"C:\Users\tanhe\Downloads\Project1Part1.3out"
+
+### Initialize file ###
+results = ReadData(output)
+
+### Test certain methods ###
+TallyCells = results.TallyCells(4)
+#print(TallyCells)
+
+#print(results.TallyValues(tally_number=4, cell_list = [101,293]))
+
+print(results.Volumes([101,2, 10000]))
+# results.AtomDensity(TallyCells)
+# results.MassDensity(TallyCells)
+# results.Mass(TallyCells)
+# results.Imp(TallyCells)
+# results.Matcard(TallyCells)
+results.NPS()
+
+
+# In[ ]:
+
 
 
 
